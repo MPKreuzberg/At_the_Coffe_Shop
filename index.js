@@ -18,9 +18,9 @@ class CoffeeShop {
 			}
 		}
 		if (counter > 0) {
-			console.log(`Your order of ${name} has been taken succesfully.`);
+			console.log(`Order of ${name} has been taken succesfully.`);
 		} else {
-			console.log(`This item is currently unavailable!`);
+			console.log(`\n` + `\x1b[31m%s\x1b[0m`, `Sorry, we don't have it on the menu.`);
 		}
 	}
 
@@ -31,7 +31,7 @@ class CoffeeShop {
 			console.log(`The ${this.orders[0]} is ready!`);
 			this.orders.shift();
 		} else {
-			console.log(`All orders have been fulfilled!`);
+			console.log("\x1b[35m",`All orders have been fulfilled!`);
 		}
 	}
 
@@ -40,7 +40,7 @@ class CoffeeShop {
 	listOrders() {
 		console.log(`Still opened orders:`);
 		this.orders.forEach((element) => {
-			console.log(`- ${element}`);
+			console.log("\x1b[33m", `- ${element}`);
 		});
 	}
 
@@ -53,7 +53,7 @@ class CoffeeShop {
 				if (itemA == itemB.item) due += itemB.price;
 			}
 		}
-		console.log(`Total amount due is: ${due}$`);
+		console.log(`\x1b[31m%s\x1b[0m`, `Total amount due is: ${due}$`);
 	}
 
 	// This function creates a new array and converts it to a string from the menu object and sorts it by price from lowest to highest and converts it to a string .
@@ -73,7 +73,7 @@ class CoffeeShop {
 		);
 	}
 
-	// create a function that returns the item names of the type drink from the menu
+	// 
 
 	drinksOnly() {
 		let drinks = [];
@@ -87,13 +87,13 @@ class CoffeeShop {
 
 	// Function does the same as previous but for food items.
 	foodOnly() {
-		let arr = [];
+		let foodies = [];
 		for (let item of this.menu) {
 			if (item.type === "food") {
-				arr.push(item.item);
+				foodies.push(item.item);
 			}
 		}
-		console.log(`Foods on the menu: ${arr}`);
+		console.log(`Foods on the menu: ${foodies}`);
 	}
 }
 
@@ -116,6 +116,7 @@ ordersShop.addOrder("sandwich");
 ordersShop.addOrder("pizza");
 ordersShop.addOrder("eggs");
 
+ordersShop.fullFillOrder();
 ordersShop.fullFillOrder();
 ordersShop.fullFillOrder();
 ordersShop.fullFillOrder();
