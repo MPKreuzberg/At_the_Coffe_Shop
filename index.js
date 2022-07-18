@@ -1,4 +1,13 @@
-// const prompt = require("prompt-sync")({ sigint: true });
+const prompt = require("prompt-sync")({ sigint: true });
+
+let menu = [
+	{ item: "coffee", type: "drink", price: 5 },
+	{ item: "tea", type: "drink", price: 4 },
+	{ item: "beer", type: "drink", price: 5 },
+	{ item: "pizza", type: "food", price: 7 },
+	{ item: "sandwich", type: "food", price: 10 },
+	{ item: "eggs", type: "food", price: 12 },
+];
 
 class CoffeeShop {
 	constructor(name, menu) {
@@ -18,11 +27,19 @@ class CoffeeShop {
 			}
 		}
 		if (counter > 0) {
-			console.log(`Order of ${name} has been taken succesfully.`);
-		} else {
-			console.log(`\n` + `\x1b[31m%s\x1b[0m`, `Sorry, we don't have it on the menu.`);
-		}
+			console.log(`${name} has been taken succesfully.` + `\n`);
+		} else if (this.name !== menu.item && typeof name !== "string") {
+			console.log(
+				`\n` + `\x1b[31m%s\x1b[0m`,
+				`Sorry, we don't have it on the menu.`
+			);
+		} if (counter = 0) {
+			console.log(`Order finished succesfully.`);
+		}  
 	}
+
+	
+	
 
 	// Here function checks if the orders array has any elements in it. If it does it logs The ${this.orders[0]} is ready! . If it doesn't it logs "All orders have been fulfilled!".
 
@@ -31,7 +48,7 @@ class CoffeeShop {
 			console.log(`The ${this.orders[0]} is ready!`);
 			this.orders.shift();
 		} else {
-			console.log("\x1b[35m",`All orders have been fulfilled!`);
+			console.log("\x1b[35m", `All orders have been fulfilled!`);
 		}
 	}
 
@@ -56,6 +73,8 @@ class CoffeeShop {
 		console.log(`\x1b[31m%s\x1b[0m`, `Total amount due is: ${due}$`);
 	}
 
+	
+
 	// This function creates a new array and converts it to a string from the menu object and sorts it by price from lowest to highest and converts it to a string .
 
 	cheapestItem() {
@@ -67,9 +86,9 @@ class CoffeeShop {
 
 	//This function does the same as previous but in reversed order from highest to lowest prices.
 	mostExpensiveItem() {
-		let cheapest = this.menu.sort((a, b) => b.price - a.price);
+		let expensive = this.menu.sort((a, b) => b.price - a.price);
 		console.log(
-			`The most expensive item on the menu is ${cheapest[0].item} and it costs ${cheapest[0].price}$`
+			`The most expensive item on the menu is ${expensive[0].item} and it costs ${expensive[0].price}$`
 		);
 	}
 
@@ -97,41 +116,87 @@ class CoffeeShop {
 	}
 }
 
-let menu = [
-	{ item: "coffee", type: "drink", price: 5 },
-	{ item: "tea", type: "drink", price: 4 },
-	{ item: "beer", type: "drink", price: 5 },
-	{ item: "pizza", type: "food", price: 7 },
-	{ item: "sandwich", type: "food", price: 10 },
-	{ item: "eggs", type: "food", price: 12 },
-];
+
 
 let ordersShop = new CoffeeShop("CoffeeShop", menu);
 
 // ordersShop.addOrder();
-ordersShop.addOrder("coffee");
-ordersShop.addOrder("tea");
-ordersShop.addOrder("beer");
-ordersShop.addOrder("sandwich");
-ordersShop.addOrder("pizza");
-ordersShop.addOrder("eggs");
+// ordersShop.addOrder("coffee");
+// ordersShop.addOrder("tea");
+// ordersShop.addOrder("beer");
+// ordersShop.addOrder("sandwich");
+// ordersShop.addOrder("pizza");
+// ordersShop.addOrder("eggs");
 
-ordersShop.fullFillOrder();
-ordersShop.fullFillOrder();
-ordersShop.fullFillOrder();
-ordersShop.fullFillOrder();
-ordersShop.fullFillOrder();
 // ordersShop.fullFillOrder();
 // ordersShop.fullFillOrder();
+// ordersShop.fullFillOrder();
+// ordersShop.fullFillOrder();
+// ordersShop.fullFillOrder();
+// ordersShop.fullFillOrder();
+// ordersShop.fullFillOrder();
 
-ordersShop.listOrders();
+// ordersShop.listOrders();
 
-ordersShop.dueAmount();
+// ordersShop.dueAmount();
 
-ordersShop.cheapestItem();
+// ordersShop.cheapestItem();
 
-ordersShop.mostExpensiveItem();
+// ordersShop.mostExpensiveItem();
 
-ordersShop.drinksOnly();
+// ordersShop.drinksOnly();
 
-ordersShop.foodOnly();
+// ordersShop.foodOnly();
+
+
+
+console.log( `\n` + `\n` + '\x1b[33m%s\x1b[0m', `Welcome to ${ordersShop.name}!` + `\n`);
+console.log('\x1b[34m%s\x1b[0m', `Our menu:`  + `\n`);
+for (let element of menu) {
+	console.log(`\x1b[33m%s\x1b[0m`,` ${element.item} - ${element.price} €`);
+}
+
+console.log(`\n`);
+cashier(menu, this.price);
+
+
+function cashier(menu, price, event) {
+	let order = prompt("Enter items you want to order:   ");
+	ordersShop.addOrder(order);
+	if (order != "") {
+		cashier(menu, price);
+	}
+	if (order == "") {
+		
+		console.log(`\n` + `\x1b[2m%s\x1b[0m`, `Thank you for your order!` + `\n`);
+	}
+	return order;
+}
+
+
+function prinBill(order, event) {
+	let bill = [];
+	for (let item of order) {
+		for (let element of menu) {
+			if (item == element.item) {
+				bill.push(`- ${item} - ${element.price}€`);
+			}
+		}
+	}
+	console.log(`Your order: ${bill}`+ `\n`);
+	let due = 0;
+	for (let item of order) {
+		for (let element of menu) {
+			if (item == element.item) {
+				due += element.price;
+			}
+		}
+	}
+
+	console.log( `\x1b[45m%s\x1b[0m`,`Total amount is: ${due}€`);
+}
+prinBill(ordersShop.orders);
+console.log(`\n`+ `\n`+ `\n`+ `\n`);
+
+
+
